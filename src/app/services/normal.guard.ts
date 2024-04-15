@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NormalGuard implements CanActivate {
   
-  constructor(private login:LoginService,private router:Router){}
+  constructor(private login:AccountService,private router:Router){}
   
   
   canActivate(
@@ -16,7 +17,7 @@ export class NormalGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean |
      UrlTree {
 
-      if(this.login.isLoggedIn() && this.login.getUserRole() == 'NORMAL'){
+      if(this.login.getIsConnected() && this.login.getUserRole() == 'NORMAL'){
         return true;
       }
 

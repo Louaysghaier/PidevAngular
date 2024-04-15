@@ -1,0 +1,107 @@
+.profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mat-card-actions {
+    display: flex;
+    justify-content: center;
+}
+.mat-card-actions button {
+    margin-right: 10px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.mat-card-actions button[color="primary"] {
+    background-color: #1976d2;
+    color: white;
+}
+
+.mat-card-actions button[color="accent"] {
+    background-color: #ff4081;
+    color: white;
+}
+
+.mat-card-actions button:hover {
+    opacity: 0.8;
+}
+.cardo {
+    padding: 20px;
+    margin-left: 400px;
+    display: flex;
+  }
+  
+  .card-header {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .btn-danger {
+    background-color: #f44336;
+    color: white;
+  }
+  

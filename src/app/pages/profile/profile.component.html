@@ -1,51 +1,115 @@
-<mat-card>
-    <h3>Your profile Details</h3>
+<section class="profilesection">
+<mat-card class="profile-card">
+    <h3>Your Profile Details</h3>
     <mat-card-content>
-        <div class="bootstrao-wrapper">
-            <div class="container">
-                <div class="container text-center">
+        <div class="bootstrap-wrapper">
+            <div class="container text-center">
+                <img src="https://www.example.com/default-profile-image.png" alt="" class="profile-image">
+                <h1 class="mt20">{{ user.name }} {{ user.lastname }}</h1>
+            </div>
 
-                    <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.pngitem.com%2Fpimgs%2Fm%2F22-223968_default-profile-picture-circle-hd-png-download.png&tbnid=z416MJLH1h7wZM&vet=12ahUKEwi6u4yz7J6FAxUlV6QEHQwMD0cQMygTegQIARB7..i&imgrefurl=https%3A%2F%2Fwww.pngitem.com%2Fmiddle%2FixJxJh_default-profile-picture-circle-hd-png-download%2F&docid=NP1ZyVKEKTwXjM&w=860&h=900&q=default%20profile%20images&ved=2ahUKEwi6u4yz7J6FAxUlV6QEHQwMD0cQMygTegQIARB7"
-                    alt=""
-                    class="profile-image "
-                    />
-                   
-                    <h1 class="mt20"> Mouadh Wahada</h1>
+            <div class="row">
+                <div class="col-md-10 offset-md-1"></div>
 
-                </div>
-
-                <div class="row">
-                    <div class="col-md-10 offset-md-1"></div>
-
-                    <table class="table text-center">
-                        <tr>
-                            <td>Username</td>
-                         <td>{{user.Username}}</td>
-                        </tr>
-                        <tr>
-                            <td>UserId</td>
-                         <td>{{user.UserId}}</td>
-                        </tr>
-                        <tr *ngIf="user.Phone">
-                            <td>Phone</td>
-                         <td>{{user.Phone}}</td>
-                        </tr>
-                        <tr>
-                            <td>Role</td>
-                         <td>{{user.authorties[0].authorty}}</td>
-                        </tr>
-                        <tr>
-                            <td>Status</td>
-                         <td>{{user.enabled?"ACTIVE":"NOTACTIVE"}}</td>
-                        </tr>
-
-                    </table>
-                </div>
+                <table class="table text-center">
+                    <tr>
+                        <td>Username</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr *ngIf="user.number">
+                        <td>Phone</td>
+                        <td>{{ user.number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Role</td>
+                        <td>{{ user.roles && user.roles.length > 0 ? user.roles[0].name : 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{ user.valid ? 'Active' : 'Inactive' }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <mat-card-actions>
-            <button mat-raised-button color="primary">LIKE</button>
-            <button mat-raised-button color="accent">SHARE</button>
-        </mat-card-actions>
     </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="btn ">LIKE</button>
+        <button mat-raised-button class="btn ">SHARE</button>
+    </mat-card-actions>
 </mat-card>
+    <div class="cardo">
+    <div class="card-header card-header-danger">
+        <h4 class="card-title ">les Empolyes</h4>
+        <p class="card-category"> Tout les empolyes inscripts</p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+
+                    
+                    <th>
+                        name
+                    </th>
+                    <th>
+                        username
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                       PhoneNumber
+                    </th>
+                  
+                    <th>
+                      localisation
+                    </th>
+                    
+                    <th>
+                      Blocked?
+                    </th>
+                    <th>
+                      active\desactive(user)
+                  </th>
+                  
+                </thead>
+               
+                <tbody *ngFor="let user of users">
+                    <tr >
+                        
+                        <td>
+                          {{user.name}}
+                      </td>
+                        <td>
+                          {{user.username}}
+                      </td>
+                        <td>
+                          {{user.email}}
+                      </td>
+                      <td>
+                          {{user.number}}
+                      </td>
+                     
+                      <td>
+                          {{user.address}}
+                      </td>
+                        
+                      <td>
+                          {{user.blocked}}
+                      </td>
+                        <td>
+                          <button *ngIf="user.blocked"(click)="activateUser(user)" type="button" class="btn btn-primary" >Active</button>
+                          <button *ngIf="!user.blocked"(click)="bloqueUser(user)" type="button" class="btn btn-danger">Bloque</button>
+                        </td>
+                        
+                    </tr>
+               
+                </tbody>
+             
+            </table>
+        </div>
+    </div>

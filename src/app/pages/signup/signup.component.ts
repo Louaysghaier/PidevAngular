@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/models';
+import { AccountService } from 'src/app/services/account.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -12,15 +14,17 @@ export class SignupComponent implements OnInit{
   json: { username: string; password: string; firstname: string; lastname: string; email: string; phone: string; } | undefined;
 
 
-  constructor(private userservice:UserService ,private snack:MatSnackBar){}
+  constructor(private userservice:UserService ,private authService: AccountService ,private snack:MatSnackBar){}
 
-  public user ={
+  public user:User ={
     username:'',
     password:'',
-    firstname:'',
+    name:'',
     lastname:'',
     email:'',
-    phone:'',
+    Role: '',
+
+    number:0,
 
   }
 
@@ -38,14 +42,17 @@ if(this.user.username=='' ||this.user.username==null){
  
   return;
 } 
+const roleName = this.user.Role||'NORMAL'; 
 
 //addUser:userService
-this.userservice.addUser(this.user).subscribe((data:any)=>{
+this.authService.register(this.user,roleName).subscribe((data:any)=>{
+  localStorage.setItem('email', this.user.email||'');
 
   //success
   console.log(data);
   //alert('success');
-  Swal.fire('Success done !!','user id is' + data.id ,'success');
+  Swal.fire('ouvrir votre mail pour activer votre compte !!');
+  
 },
 (error) =>{
   console.log(error);

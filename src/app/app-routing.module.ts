@@ -8,6 +8,8 @@ import { AdminGuard } from './services/admin.guard';
 import { UserDashboardComponent } from './pages/user/user-dashboard/user-dashboard.component';
 import { NormalGuard } from './services/normal.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { LoginforgetpasswordComponent } from './pages/loginforgetpassword/loginforgetpassword.component';
+import { VerificationComponent } from './pages/verification/verification.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,8 @@ const routes: Routes = [
     component : LoginComponent,
     
   },
+  { path: 'forgetpassword', component: LoginforgetpasswordComponent},
+  { path: 'verification', component: VerificationComponent},
   {
     path:"admin",
     component : AllTemplateBackComponent,

@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-body">
+      <form [formGroup]="fg" (ngSubmit)="submitfg()">
+
+        <div class="form-group">
+        <label for="code">Enter the code from your mail</label>
+        <input type="text" id="code" class="form-control mt-2" placeholder="Code de vérification" formControlName="code">
+        </div>
+
+       
+        <div *ngIf="fg.errors?.['passwordMismatch']">
+            <p class="text-danger">error </p>
+          </div>
+        <button class="btn btn-primary mt-2">Submit</button>
+        <button  class="btn bg-white text-black  " (click)="resend()"> resend code ? </button>
+
+      </form>
+    </div>
+</div>
+<app-footer-front></app-footer-front>

@@ -8,8 +8,8 @@
                     <img src="../../../assets/images.png" alt="" />
                   </div>
 
-                  <h1 class="text-center">Login here</h1>
-
+                  <a class="text-center" routerLink="/forgetpassword"><h1>Mot de pass oublier ?</h1></a>
+                 
                   <form (ngSubmit)="formSubmit()">
                     <!-- username field-->
                     <mat-form-field class="full-width" appearance="fill">
@@ -36,7 +36,12 @@
                          placeholder="Enter here" />
           
                       </mat-form-field>
-
+                      <div class="custom-control custom-control-alternative custom-checkbox">
+                        <input class="custom-control-input" id="customCheckLogin" type="checkbox" name="rememberMe" [(ngModel)]="rememberMe" (change)="onRememberMeChange()">
+                        <label class="custom-control-label" for="customCheckLogin">
+                          <span>Remember me</span>
+                        </label>
+                      </div>
                       <div class="container text-center">
                         <button mat-raised-button color="primary" type="submit"  >
                             Login

@@ -2,22 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/services/account.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  rememberMe : boolean = false; 
 
   loginData = {
     username: '',
     password: '',
   };
 
-  constructor(private snack:MatSnackBar , private login: LoginService , private router:Router){}
+  constructor(private snack:MatSnackBar , private loginservice: AccountService , private router:Router){}
 
   ngOnInit():void {}
-  
+  onRememberMeChange(): void {
+    // This method is called when the value of the "Remember me" checkbox changes
+    console.info('Remember me value changed:', this.rememberMe);
+  }
   formSubmit(){
 
    // console.log('login button clicked');
@@ -42,51 +47,44 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
-
-    this.login.generateToken(this.loginData).subscribe(
-      (data:any) =>
-      {
-      console.log('success');
-      console.log(data);
-
-      //login 
-      this.login.loginUser(data.token);
-      this.login.getCurrentUser().subscribe(
-        (user:any)=>{
-       this.login.setUser(user);
-         console.log(user);
-     
-      //   //redirect::ADMIN
-    
-        if(this.login.getUserRole() == 'ADMIN'){
-      //     //admin dashboard
-     // window.location.href='/admin';
-   
+    this.loginservice.login(this.loginData.username,  this.loginData.password).subscribe(
+      (response) => {      
+        console.log('User logged in successfully!');
+        const accessToken = response.accessToken;
+        const   refreshToken = response.refreshToken;
         
-      this.router.navigate(['admin']);
-      this.login.loginStatusSubject.next(true);
-      //  //this.login.loginStatusSubject.next(true);
+        // Check if rememberMe is true, then store tokens in localStorage
+        if (this.rememberMe === true) {
+          // Store data in cookies with an expiration date
+          const expirationDate = new Date();
+          expirationDate.setDate(expirationDate.getDate() +20 ); // Expires in 20 days
+          document.cookie = `user=${encodeURIComponent(JSON.stringify(response))};expires=${encodeURIComponent(expirationDate.toUTCString())};path=/`;
+          document.cookie = `accessToken=${encodeURIComponent(accessToken)};expires=${encodeURIComponent(expirationDate.toUTCString())};path=/`;
+          document.cookie = `refreshToken=${encodeURIComponent(refreshToken)};expires=${encodeURIComponent(expirationDate.toUTCString())};path=/`;
 
+        } else {
+          // Store data in session cookies (cookies without expiration)
+          document.cookie = `user=${encodeURIComponent(JSON.stringify(response))}; path=/`;
+          document.cookie = `accessToken=${encodeURIComponent(accessToken)}; path=/`;
+          document.cookie = `refreshToken=${encodeURIComponent(refreshToken)}; path=/`;
+          
         }
-        else if(this.login.getUserRole() == 'NORMAL'){
-      //   //redirect..NORMAL
-      //window.location.href ='/user-dashboard';
-      
-      this.router.navigate(['user-dashboard']);
-      this.login.loginStatusSubject.next(true);
-      // this.role ='/user-dashboard';
+       
+        const userAuthorities = response.authorities.map((authority:any) => authority.authority);
+        console.log('User authorities:', userAuthorities);
+        
+        if (userAuthorities[0].includes("NORMAL")) {
+          console.log('User is a normal user');
+          this.router.navigate(['/user-dashboard']);
+     
+        } else if (userAuthorities[0].includes("ADMIN")) {
+          console.log('User is an admin');
+          this.router.navigate(['/admin']); 
+        }
+        
+
       }
-      else{
-          this.login.logout();
-     // location.reload();
-      //    console.log("logout")
-
-      //   }
-       } 
-      });
-      
-
-    },
+   ,
     (error)=> {
       console.log('Error !');
       console.log(error);
